@@ -1,0 +1,66 @@
+/* Стили для страниц аутентификации в общем пастельном стиле приложения */
+.auth-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Карточка авторизации в том же стиле, что и остальные карточки */
+.auth-card {
+    border-radius: 0.75rem;
+    border: 1px solid rgba(244, 200, 210, 0.6);
+    background-color: #fff5f7;
+    box-shadow: 0 0.75rem 1.5rem rgba(244, 200, 210, 0.35);
+}
+
+/* Шапка карточки с мягким градиентом */
+.auth-header {
+    background: linear-gradient(135deg, #a8d5e2 0%, #f5c2d1 50%, #e8b4d4 100%);
+    color: #ffffff;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+    padding: 1.75rem 1.5rem;
+}
+
+.auth-logo {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+    margin-bottom: 0;
+    opacity: 0.95;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Кастомные чекбоксы в розово-голубой палитре */
+.form-check-input:checked {
+    background-color: #7bb3d9;
+    border-color: #7bb3d9;
+}
+
+/* Ссылки "Зарегистрируйтесь" и др. в фирменном голубом */
+.auth-card a {
+    color: #7bb3d9;
+}
+
+.auth-card a:hover {
+    color: #5a9bc5;
+    text-decoration: none;
+}
+
+/* Небольшая адаптация отступов на мобильных */
+@media (max-width: 576px) {
+    .auth-card {
+        box-shadow: 0 0.5rem 1rem rgba(244, 200, 210, 0.3);
+    }
+
+    .auth-header {
+        padding: 1.25rem 1rem;
+    }
+}

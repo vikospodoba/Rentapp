@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель - RentApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+
+<div class="container mt-4">
+    <!-- Welcome Message -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <i class="fas fa-tachometer-alt me-2"></i>
+                        <span th:if="${isFirstVisit && currentUser.role == 'CLIENT'}">
+                            Добро пожаловать, <span th:text="${currentUser.firstName != null && !currentUser.firstName.isEmpty() ? currentUser.firstName : 'Пользователь'}">Пользователь</span>!
+                        </span>
+                        <span th:unless="${isFirstVisit && currentUser.role == 'CLIENT'}">
+                            С возвращением, <span th:text="${currentUser.firstName != null && !currentUser.firstName.isEmpty() ? currentUser.firstName : 'Пользователь'}">Пользователь</span>!
+                        </span>
+                    </h2>
+                    <p class="card-text mb-0">
+                        <span th:if="${currentUser.role == 'ADMIN'}">У вас полный административный доступ к системе.</span>
+                        <span th:if="${currentUser.role == 'MANAGER'}">Управляйте бронированиями и помогайте клиентам.</span>
+                        <span th:if="${currentUser.role == 'CLIENT'}">Просматривайте автомобили и управляйте своими бронированиями.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div sec:authorize="hasRole('ADMIN')">
+        <h3 class="mb-4"><i class="fas fa-crown me-2"></i>Панель администратора</h3>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5>Всего пользователей</h5>
+                                <h2 th:text="${stats.totalUsers}">0</h2>
+                            </div>
+                            <i class="fas fa-users fa-2x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5>Всего автомобилей</h5>
+                                <h2 th:text="${stats.totalCars}">0</h2>
+                            </div>
+                            <i class="fas fa-car fa-2x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5>Доступные автомобили</h5>
+                                <h2 th:text="${stats.availableCars}">0</h2>
+                            </div>
+                            <i class="fas fa-check-circle fa-2x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5>Всего аренд</h5>
+                                <h2 th:text="${stats.totalRentals}">0</h2>
+                            </div>
+                            <i class="fas fa-history fa-2x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Быстрые действия</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a th:href="@{/admin/users}" class="btn btn-outline-primary">
+                                <i class="fas fa-users-cog me-2"></i>Пользователи
+                            </a>
+                            <a th:href="@{/cars/new}" class="btn btn-outline-success">
+                                <i class="fas fa-car me-2"></i>Добавить автомобиль
+                            </a>
+                            <a th:href="@{/cars}" class="btn btn-outline-info">
+                                <i class="fas fa-list me-2"></i>Все автомобили
+                            </a>
+                            <a th:href="@{/rentals}" class="btn btn-outline-warning">
+                                <i class="fas fa-history me-2"></i>Управление арендами
+                            </a>
+                            <a th:href="@{/insurance}" class="btn btn-outline-secondary">
+                                <i class="fas fa-shield-alt me-2"></i>Страховки
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manager Dashboard -->
+    <div sec:authorize="hasRole('MANAGER')">
+        <h3 class="mb-4"><i class="fas fa-clipboard-list me-2"></i>Панель менеджера</h3>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-warning">
+                    <div class="card-body text-center">
+                        <h5>Заявки в ожидании</h5>
+                        <h2 th:text="${stats.pendingRentals}">0</h2>
+                            <a th:href="@{/rentals(status='PENDING')}" class="btn btn-light btn-sm mt-2">
+                                Посмотреть
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-info">
+                    <div class="card-body text-center">
+                        <h5>Активные аренды</h5>
+                        <h2 th:text="${stats.activeRentals}">0</h2>
+                            <a th:href="@{/rentals(status='ACTIVE')}" class="btn btn-light btn-sm mt-2">
+                                Открыть
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body text-center">
+                        <h5>Доступные авто</h5>
+                        <h2 th:text="${stats.availableCars}">0</h2>
+                            <a th:href="@{/cars}" class="btn btn-light btn-sm mt-2">
+                                Открыть список
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Dashboard -->
+    <div sec:authorize="hasRole('CLIENT')">
+        <h3 class="mb-4"><i class="fas fa-user me-2"></i>Моя панель</h3>
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary">
+                    <div class="card-body text-center">
+                        <h5>Мои аренды</h5>
+                        <h2 th:text="${stats.myRentalsCount}">0</h2>
+                        <a th:href="@{/rentals}" class="btn btn-light btn-sm mt-2">
+                            Открыть все
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body text-center">
+                        <h5>Активные аренды</h5>
+                        <h2 th:text="${stats.myActiveRentals}">0</h2>
+                        <a th:href="@{/rentals(status='ACTIVE')}" class="btn btn-light btn-sm mt-2">
+                            Открыть активные
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-info">
+                    <div class="card-body text-center">
+                        <h5>Доступные авто</h5>
+                        <h2 th:text="${stats.availableCars}">0</h2>
+                        <a th:href="@{/cars}" class="btn btn-light btn-sm mt-2">
+                            Перейти к выбору
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-rocket me-2"></i>Быстрый старт</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a th:href="@{/cars}" class="btn btn-primary">
+                                <i class="fas fa-car me-2"></i>Выбрать авто
+                            </a>
+                            <a th:href="@{/rentals}" class="btn btn-outline-primary">
+                                <i class="fas fa-history me-2"></i>Мои аренды
+                            </a>
+                            <a th:href="@{/profile}" class="btn btn-outline-secondary">
+                                <i class="fas fa-user-edit me-2"></i>Редактировать профиль
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity (Common for all roles) -->
+    <div class="row mt-4">
+        <div class="col-12">
+                    <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Последние события</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-car text-success me-2"></i>
+                                <span>Добавлен новый автомобиль в парк</span>
+                            </div>
+                            <small class="text-muted">2 hours ago</small>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-user-plus text-primary me-2"></i>
+                                <span>Новый пользователь зарегистрировался</span>
+                            </div>
+                            <small class="text-muted">5 hours ago</small>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-calendar-check text-info me-2"></i>
+                                <span>Заявка на аренду подтверждена</span>
+                            </div>
+                            <small class="text-muted">1 day ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+    <title>О проекте - RentApp</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+
+      <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">О проекте RentApp</h1>
+        <p class="lead">Система управления арендой автомобилей — курсовой проект</p>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0"><i class="fas fa-user me-2"></i>Информация об авторе</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <table class="table table-borderless">
+                <tr>
+                  <th width="40%">ФИО:</th>
+                  <td th:text="${author}">Подоба Виктория Павловна</td>
+                </tr>
+                <tr>
+                  <th>Группа:</th>
+                  <td th:text="${group}">ПИ23-1</td>
+                </tr>
+                <tr>
+                  <th>Университет:</th>
+                  <td th:text="${university}">Финансовый университет при Правительстве РФ</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <table class="table table-borderless">
+                <tr>
+                  <th width="40%">Начало работы:</th>
+                  <td th:text="${startDate}">01.10.2025</td>
+                </tr>
+                <tr>
+                  <th>Окончание работы:</th>
+                  <td th:text="${endDate}">11.12.2025</td>
+                </tr>
+                <tr>
+                  <th>Тип проекта:</th>
+                  <td>Курсовой проект</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Описание проекта -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4 class="mb-0"><i class="fas fa-info-circle me-2"></i>Описание проекта</h4>
+        </div>
+        <div class="card-body">
+          <p>
+            RentApp — это веб‑приложение для управления арендой автомобилей, разработанное в рамках
+            курсового проекта по дисциплине «Современные технологии программирования». Система
+            автоматизирует процессы подбора автомобиля, оформления аренды, учёта платежей и работы
+            с клиентами.
+          </p>
+
+          <h5>Основные возможности:</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <ul>
+                <li>Регистрация и аутентификация пользователей</li>
+                <li>Разграничение прав по ролям (Администратор, Менеджер, Клиент)</li>
+                <li>Каталог автомобилей с поиском и фильтрацией</li>
+                <li>Управление заявками на аренду</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul>
+                <li>Учёт платежей</li>
+                <li>Отслеживание доступности автомобилей</li>
+                <li>Панель администратора со статистикой</li>
+                <li>Адаптивный веб‑интерфейс</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+          <!-- Технологический стек -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4 class="mb-0"><i class="fas fa-code me-2"></i>Используемые технологии</h4>
+        </div>
+        <div class="card-body">
+          <div class="row text-center">
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fab fa-java fa-3x text-primary mb-2"></i>
+                <h6>Java 17</h6>
+                <small class="text-muted">Язык серверной части</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fas fa-leaf fa-3x text-success mb-2"></i>
+                <h6>Spring Boot</h6>
+                <small class="text-muted">Фреймворк приложения</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fas fa-shield-alt fa-3x text-warning mb-2"></i>
+                <h6>Spring Security</h6>
+                <small class="text-muted">Аутентификация и авторизация</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fas fa-database fa-3x text-info mb-2"></i>
+                <h6>PostgreSQL</h6>
+                <small class="text-muted">База данных</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row text-center mt-3">
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fab fa-html5 fa-3x text-orange mb-2"></i>
+                <h6>Thymeleaf</h6>
+                <small class="text-muted">Шаблонизатор</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fab fa-bootstrap fa-3x text-purple mb-2"></i>
+                <h6>Bootstrap 5</h6>
+                <small class="text-muted">CSS‑фреймворк</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fab fa-js-square fa-3x text-warning mb-2"></i>
+                <h6>JavaScript</h6>
+                <small class="text-muted">Клиентская логика</small>
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+              <div class="p-3 border rounded">
+                <i class="fas fa-server fa-3x text-secondary mb-2"></i>
+                <h6>JPA/Hibernate</h6>
+                <small class="text-muted">ORM‑слой</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4 class="mb-0"><i class="fas fa-tasks me-2"></i>Реализованные требования</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Функциональные требования:</h6>
+              <ul>
+                <li>✅ Регистрация и вход пользователей</li>
+                <li>✅ Разграничение доступа по ролям</li>
+                <li>✅ CRUD‑операции для автомобилей и аренд</li>
+                <li>✅ Поиск и фильтрация данных</li>
+                <li>✅ Сортировка данных</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>Технические требования:</h6>
+              <ul>
+                <li>✅ Использование Spring Boot</li>
+                <li>✅ Работа с базой данных PostgreSQL</li>
+                <li>✅ Адаптивный веб‑интерфейс</li>
+                <li>✅ Обработка ошибок и валидация данных</li>
+                <li>✅ Реализованная защита (Spring Security)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h4 class="mb-0"><i class="fas fa-envelope me-2"></i>Контакты</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p>
+                <strong>По вопросам по проекту:</strong><br>
+                <i class="fas fa-envelope me-2"></i>
+                231129@edu.fa.ru
+              </p>
+              <p>
+                <strong>Дисциплина:</strong><br>
+                <i class="fas fa-book me-2"></i>
+                Современные технологии программирования
+              </p>
+            </div>
+            <div class="col-md-6">
+              <p>
+                <strong>Учебный год:</strong><br>
+                <i class="fas fa-calendar me-2"></i>
+                2025
+              </p>
+              <p>
+                <strong>Статус проекта:</strong><br>
+                <i class="fas fa-check-circle me-2 text-success"></i>
+                Завершён
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

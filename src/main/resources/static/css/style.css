@@ -1,0 +1,306 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fef7f7;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Карточки */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(244, 200, 210, 0.15);
+    border: 1px solid rgba(244, 200, 210, 0.3);
+    background-color: #fff5f7;
+}
+
+.card-header {
+    background-color: #ffeef1;
+    border-bottom: 1px solid rgba(244, 200, 210, 0.3);
+}
+
+/* Таблицы */
+.table th {
+    background-color: #f5d7e3;
+    color: #333;
+    border-color: #e8c4d4;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 230, 240, 0.5);
+}
+
+/* Кнопки – единый нежно-розово-голубой стиль */
+:root {
+    --btn-main: #d68ab7;
+    --btn-main-hover: #c274a3;
+    --btn-secondary: #7bb3d9;
+    --btn-secondary-hover: #5a9bc5;
+    --badge-dark: #674b5c;
+}
+
+.btn-primary,
+.btn-success,
+.btn-warning,
+.btn-info,
+.btn-danger {
+    background-color: var(--btn-main);
+    border-color: var(--btn-main);
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-warning:hover,
+.btn-info:hover,
+.btn-danger:hover {
+    background-color: var(--btn-main-hover);
+    border-color: var(--btn-main-hover);
+    color: #fff;
+}
+
+/* Переопределение всех фоновых классов Bootstrap на розовую палитру */
+.bg-success,
+.card.bg-success,
+.text-white.bg-success {
+    background-color: #d68ab7 !important;
+}
+
+.bg-warning,
+.card.bg-warning,
+.text-white.bg-warning {
+    background-color: #e8b4d4 !important;
+    color: #674b5c !important;
+}
+
+.bg-info,
+.card.bg-info,
+.text-white.bg-info {
+    background-color: #c9dff1 !important;
+    color: #2f4e68 !important;
+}
+
+.bg-danger,
+.card.bg-danger,
+.text-white.bg-danger {
+    background-color: #d68ab7 !important;
+}
+
+.bg-primary,
+.card.bg-primary,
+.text-white.bg-primary {
+    background-color: #d68ab7 !important;
+}
+
+/* Alert-ы в розовой палитре */
+.alert-success {
+    background-color: #f0d9e8 !important;
+    border-color: #d68ab7 !important;
+    color: #674b5c !important;
+}
+
+.alert-warning {
+    background-color: #f5e4ed !important;
+    border-color: #e8b4d4 !important;
+    color: #674b5c !important;
+}
+
+.alert-info {
+    background-color: #e8f0f7 !important;
+    border-color: #c9dff1 !important;
+    color: #2f4e68 !important;
+}
+
+.alert-danger {
+    background-color: #f0d9e8 !important;
+    border-color: #d68ab7 !important;
+    color: #674b5c !important;
+}
+
+.jumbotron {
+    background: linear-gradient(135deg, #a8d5e2 0%, #f5c2d1 50%, #e8b4d4 100%);
+    color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+
+/* Анимации */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Статусы */
+.status-available { color: #d68ab7; }
+.status-rented { color: #c274a3; }
+.status-maintenance { color: #9c7d8f; }
+
+/* Кастомные стили для автомобилей */
+.car-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+}
+
+.car-image {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.price-tag {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+
+    .btn-group .btn {
+        margin-bottom: 0.25rem;
+    }
+}
+
+/* Градиентная кнопка редактирования */
+.btn-edit-gradient {
+    background: linear-gradient(135deg, #d68ab7 0%, #7bb3d9 100%);
+    border: none;
+    color: white;
+    font-weight: 500;
+}
+
+.btn-edit-gradient:hover {
+    background: linear-gradient(135deg, #c274a3 0%, #5a9bc5 100%);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(214, 138, 183, 0.3);
+}
+
+/* Badges в розово-голубой палитре */
+.badge.bg-success,
+.badge.bg-primary {
+    background-color: #d68ab7 !important;
+    color: white;
+}
+
+.badge.bg-warning {
+    background-color: #e8b4d4 !important;
+    color: #674b5c;
+}
+
+.badge.bg-info {
+    background-color: #c9dff1 !important;
+    color: #2f4e68;
+}
+
+.badge.bg-danger {
+    background-color: #d68ab7 !important;
+    color: white;
+}
+
+.badge.bg-secondary {
+    background-color: #f5e6ed !important;
+    color: #674b5c;
+}
+
+/* Outline кнопки */
+.btn-outline-primary {
+    border-color: #d68ab7;
+    color: #d68ab7;
+}
+
+.btn-outline-primary:hover {
+    background-color: #d68ab7;
+    border-color: #d68ab7;
+    color: white;
+}
+
+.btn-outline-success {
+    border-color: #d68ab7;
+    color: #d68ab7;
+}
+
+.btn-outline-success:hover {
+    background-color: #d68ab7;
+    border-color: #d68ab7;
+    color: white;
+}
+
+.btn-outline-warning {
+    border-color: #e8b4d4;
+    color: #e8b4d4;
+}
+
+.btn-outline-warning:hover {
+    background-color: #e8b4d4;
+    border-color: #e8b4d4;
+    color: #674b5c;
+}
+
+.btn-outline-info {
+    border-color: #c9dff1;
+    color: #c9dff1;
+}
+
+.btn-outline-info:hover {
+    background-color: #c9dff1;
+    border-color: #c9dff1;
+    color: #2f4e68;
+}
+
+.btn-outline-danger {
+    border-color: #d68ab7;
+    color: #d68ab7;
+}
+
+.btn-outline-danger:hover {
+    background-color: #d68ab7;
+    border-color: #d68ab7;
+    color: white;
+}
+
+.btn-outline-secondary {
+    border-color: #f5e6ed;
+    color: #674b5c;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f5e6ed;
+    border-color: #f5e6ed;
+    color: #674b5c;
+}
+
+/* Текстовые цвета */
+.text-success,
+.text-primary {
+    color: #d68ab7 !important;
+}
+
+.text-warning {
+    color: #e8b4d4 !important;
+}
+
+.text-info {
+    color: #c9dff1 !important;
+}
+
+.text-danger {
+    color: #d68ab7 !important;
+}
+
+/* Формы */
+.form-control:focus {
+    border-color: #d68ab7;
+    box-shadow: 0 0 0 0.25rem rgba(214, 138, 183, 0.25);
+}

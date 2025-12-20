@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="bg-dark text-light mt-5">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md-4">
+        <h5><i class="fas fa-car me-2"></i>RentApp</h5>
+        <p>Надёжный сервис аренды автомобилей. Качественные машины по доступным ценам.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Навигация</h5>
+        <ul class="list-unstyled">
+          <li><a th:href="@{/}" class="text-light">Главная</a></li>
+          <li><a th:href="@{/cars}" class="text-light">Все автомобили</a></li>
+          <li><a th:href="@{/about}" class="text-light">О сервисе</a></li>
+          <li><a th:href="@{/register}" class="text-light">Регистрация</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Контакты</h5>
+        <ul class="list-unstyled">
+          <li><i class="fas fa-phone me-2"></i>+7 (916) 255-92-19</li>
+          <li><i class="fas fa-envelope me-2"></i>info@rentapp.com</li>
+          <li><i class="fas fa-map-marker-alt me-2"></i>г.Москва, ул. 4-й Вешняковский проезд, 4с3</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="my-4">
+    <div class="text-center">
+      <p class="mb-0">&copy; 2025 RentApp. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

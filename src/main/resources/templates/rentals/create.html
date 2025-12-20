@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Аренда автомобиля - RentApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{fragment/header :: header}"></div>
+
+<div class="container mt-4">
+    <!-- Back Button -->
+    <div class="mb-4">
+        <a th:href="@{/cars}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>К списку автомобилей
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-calendar-plus me-2"></i>
+                        Оформление аренды
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <!-- Car Information -->
+                    <div th:if="${car}" class="mb-4 p-3 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <img th:src="${car.imageUrl != null ? car.imageUrl : 'https://via.placeholder.com/200x150?text=Car'}" th:alt="${car.brand + ' ' + car.model}"
+                                     class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-9">
+                                <h4 th:text="${car.brand + ' ' + car.model}">Автомобиль</h4>
+                                <p class="text-muted mb-1" th:text="${car.year}">2023</p>
+                                <p class="mb-1" th:text="${car.description}">Описание автомобиля...</p>
+                                <h5 class="text-success mb-0">
+                                    <span th:text="${#numbers.formatDecimal(car.pricePerDay, 1, 2)}">45.00</span> ₽/день
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Информация о страховке</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Компания:</strong></p>
+                                    <p class="mb-1"><strong>Номер полиса:</strong></p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <p class="mb-1" th:text="${insuranceInfo != null ? insuranceInfo.insuranceCompany : 'Не указано'}">Не указано</p>
+                                    <p class="mb-1" th:text="${insuranceInfo != null ? insuranceInfo.policyNumber : 'Не указано'}">Не указано</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rental Form -->
+                    <form th:action="@{/rentals/new}" th:object="${rentalRequest}" method="post">
+                        <input type="hidden" th:field="*{carId}">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="startDate" class="form-label">Дата начала *</label>
+                                <input type="date" class="form-control" id="startDate" th:field="*{startDate}"
+                                       min="" required>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('startDate')}"
+                                     th:errors="*{startDate}">Ошибка даты начала</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="endDate" class="form-label">Дата окончания *</label>
+                                <input type="date" class="form-control" id="endDate" th:field="*{endDate}"
+                                       min="" required>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('endDate')}"
+                                     th:errors="*{endDate}">Ошибка даты окончания</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="specialRequests" class="form-label">Особые пожелания</label>
+                            <textarea class="form-control" id="specialRequests" th:field="*{specialRequests}"
+                                      rows="3" placeholder="Например, пожелания по времени выдачи и т.п."></textarea>
+                        </div>
+
+                        <!-- Расчёт стоимости -->
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Сводка по аренде</h5>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p class="mb-1">Стоимость в день:</p>
+                                        <p class="mb-1">Количество дней:</p>
+                                        <p class="mb-1"><strong>Итого:</strong></p>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <p class="mb-1" th:text="${#numbers.formatDecimal(car.pricePerDay, 1, 2)} + ' ₽'">45.00 ₽</p>
+                                        <p class="mb-1" id="rentalDays">0 дней</p>
+                                        <p class="mb-1"><strong id="totalPrice">0.00 ₽</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Условия аренды -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                Я согласен с <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">условиями аренды</a>
+                            </label>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a th:href="@{/cars}" class="btn btn-secondary">Отмена</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-calendar-check me-2"></i>Подтвердить аренду
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Условия аренды</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Договор аренды</h6>
+                <p>Оформляя аренду, вы подтверждаете согласие с правилами пользования автомобилем.</p>
+
+                <h6>2. Требования к водителю</h6>
+                <p>Минимальный возраст водителя — 21 год, необходим действующий водительский документ.</p>
+
+                <h6>3. Страхование</h6>
+                <p>Базовое страхование включено. Дополнительные опции могут быть оформлены отдельно.</p>
+
+                <h6>4. Отмена бронирования</h6>
+                <p>Отмена возможна не позднее чем за 24 часа до начала аренды.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragment/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    // Price calculation script
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const rentalDaysElement = document.getElementById('rentalDays');
+        const totalPriceElement = document.getElementById('totalPrice');
+        const dailyRate = [[${car.pricePerDay}]];
+
+        function calculatePrice() {
+            const startDate = new Date(startDateInput.value);
+            const endDate = new Date(endDateInput.value);
+
+            if (startDate && endDate && startDate < endDate) {
+                const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                const totalPrice = days * dailyRate;
+
+                rentalDaysElement.textContent = days + ' дней';
+                totalPriceElement.textContent = totalPrice.toFixed(2) + ' ₽';
+            }
+        }
+
+        startDateInput.addEventListener('change', calculatePrice);
+        endDateInput.addEventListener('change', calculatePrice);
+
+        // Set min dates
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        startDateInput.min = tomorrow.toISOString().split('T')[0];
+        endDateInput.min = tomorrow.toISOString().split('T')[0];
+
+        calculatePrice();
+    });
+</script>
+</body>
+</html>
