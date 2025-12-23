@@ -25,7 +25,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Only load data if no users exist
         if (userRepository.count() == 0) {
             loadSampleData();
         }
@@ -63,9 +62,9 @@ public class DataLoader implements CommandLineRunner {
         createInsurance(car5, "Согласие", "ECL-2024-005", "КАСКО + ОСАГО",
                 LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(11), new BigDecimal("1350.00"));
 
-        System.out.println("Sample data loaded successfully!");
-        System.out.println("Admin credentials: admin / admin123");
-        System.out.println("Manager credentials: manager / manager123");
+        System.out.println("Тестовые данные загрузилимь успешно!");
+        System.out.println("Реквизиты для входа админ: admin / admin123");
+        System.out.println("Реквизиты для входа менеджер: manager / manager123");
     }
 
     private CarCategory createCategory(String name, String description) {

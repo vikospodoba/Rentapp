@@ -49,6 +49,7 @@ public class Rental {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+
     @OneToMany(mappedBy = "rental", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Payment> payments = new ArrayList<>();
 

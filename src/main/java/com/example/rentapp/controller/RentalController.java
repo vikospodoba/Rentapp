@@ -255,7 +255,7 @@ public class RentalController {
         }
 
         Rental rental = rentalService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Rental not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Аренда не найдена"));
         if (rental.getUser() == null || !rental.getUser().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
@@ -275,7 +275,7 @@ public class RentalController {
     public String cancelRental(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             rentalService.updateRentalStatus(id, "CANCELLED");
-            redirectAttributes.addFlashAttribute("successMessage", "Rental cancelled successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", "Заявка отменена!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
@@ -287,13 +287,13 @@ public class RentalController {
     public String confirmRental(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             Rental rental = rentalService.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Rental not found"));
+                    .orElseThrow(() -> new RuntimeException("Аренда не найдена"));
             if (!Boolean.TRUE.equals(rental.getDepositPaid())) {
                 redirectAttributes.addFlashAttribute("errorMessage", "Сначала требуется подтверждение депозита клиентом.");
                 return "redirect:/rentals";
             }
             rentalService.updateRentalStatus(id, "CONFIRMED");
-            redirectAttributes.addFlashAttribute("successMessage", "Rental confirmed successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", "Аренда подтверждена");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
@@ -305,7 +305,7 @@ public class RentalController {
     public String completeRental(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             rentalService.updateRentalStatus(id, "COMPLETED");
-            redirectAttributes.addFlashAttribute("successMessage", "Rental marked as completed!");
+            redirectAttributes.addFlashAttribute("successMessage", "Аренда завершена!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }

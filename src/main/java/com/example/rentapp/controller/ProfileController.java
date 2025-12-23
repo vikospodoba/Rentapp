@@ -54,9 +54,9 @@ public class ProfileController {
             currentUser.setPhone(userForm.getPhone());
 
             userService.save(currentUser);
-            redirectAttributes.addFlashAttribute("successMessage", "Profile updated successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", "Профиль успешно обновлен!");
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "User not found!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Пользователь не найден!");
         }
 
         return "redirect:/profile";
@@ -70,29 +70,29 @@ public class ProfileController {
         User currentUser = userService.getCurrentUser();
 
         if (currentUser == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "User not found!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Пользователь не найден!");
             return "redirect:/profile";
         }
 
         if (!passwordEncoder.matches(currentPassword, currentUser.getPassword())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Current password is incorrect!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Пароль неверный");
             return "redirect:/profile";
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "New passwords don't match!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Пароль не совпадает");
             return "redirect:/profile";
         }
 
         if (newPassword.length() < 6) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Password must be at least 6 characters long!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Пароль должен состоять хотя бы из 6 знаков");
             return "redirect:/profile";
         }
 
         currentUser.setPassword(passwordEncoder.encode(newPassword));
         userService.save(currentUser);
 
-        redirectAttributes.addFlashAttribute("successMessage", "Password changed successfully!");
+        redirectAttributes.addFlashAttribute("successMessage", "Пароль сменен успешно!");
         return "redirect:/profile";
     }
 
